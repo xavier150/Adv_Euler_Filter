@@ -1,3 +1,12 @@
+# SPDX-FileCopyrightText: 2024-2025 Xavier Loux (BleuRaven)
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# ----------------------------------------------
+#  Adv Euler Filter
+#  https://github.com/xavier150/Adv_Euler_Filter
+# ----------------------------------------------
+
 import bpy
 import json
 import os
