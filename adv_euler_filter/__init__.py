@@ -15,61 +15,80 @@ xavierloux.com
 xavierloux.loux@gmail.com
 '''
 
-import os
-import bpy
-import fnmatch
-import time
-import addon_utils
-import importlib
-
-from . import bpl
-from . import bbpl
-from . import aef_addon_pref
-from . import aef_ui
-from . import aef_basics
-from . import aef_utils
-from . import aef_eulerfilter_utils
-from . import aef_types
+try:
+    import bpy
+    import importlib
+    from . import bpl
+    from . import bbpl
+    from . import aef_addon_pref
+    from . import aef_ui
+    from . import aef_basics
+    from . import aef_utils
+    from . import aef_eulerfilter_utils
+    from . import aef_types
 
 
-if "bpl" in locals():
-    importlib.reload(bpl)
-if "bbpl" in locals():
-    importlib.reload(bbpl)
-if "aef_addon_pref" in locals():
-    importlib.reload(aef_addon_pref)
-if "aef_ui" in locals():
-    importlib.reload(aef_ui)
-if "aef_basics" in locals():
-    importlib.reload(aef_basics)
-if "aef_utils" in locals():
-    importlib.reload(aef_utils)
-if "aef_eulerfilter_utils" in locals():
-    importlib.reload(aef_eulerfilter_utils)
-if "aef_types" in locals():
-    importlib.reload(aef_types)
+    if "bpl" in locals():
+        importlib.reload(bpl)
+    if "bbpl" in locals():
+        importlib.reload(bbpl)
+    if "aef_addon_pref" in locals():
+        importlib.reload(aef_addon_pref)
+    if "aef_ui" in locals():
+        importlib.reload(aef_ui)
+    if "aef_basics" in locals():
+        importlib.reload(aef_basics)
+    if "aef_utils" in locals():
+        importlib.reload(aef_utils)
+    if "aef_eulerfilter_utils" in locals():
+        importlib.reload(aef_eulerfilter_utils)
+    if "aef_types" in locals():
+        importlib.reload(aef_types)
 
-classes = (
-)
-
-
-def register():
-    from bpy.utils import register_class
-
-    for cls in classes:
-        register_class(cls)
-
-    bbpl.register()
-    aef_addon_pref.register()
-    aef_ui.register()
+    classes = (
+    )
 
 
-def unregister():
-    from bpy.utils import unregister_class
+    def register():
+        try:
+            from bpy.utils import register_class
 
-    for cls in classes:
-        unregister_class(cls)
+            for cls in classes:
+                register_class(cls)
 
-    aef_addon_pref.unregister()
-    aef_ui.unregister()
-    bbpl.unregister()
+            bbpl.register()
+            aef_addon_pref.register()
+            aef_ui.register()
+        except Exception as _:
+            import traceback
+            print("Failed to register addon:")
+            print("\033[91m" + "---------------------------------" + "\033[0m")
+            traceback.print_exc()
+            print("\033[91m" + "---------------------------------" + "\033[0m")
+
+
+    def unregister():
+        try:
+            from bpy.utils import unregister_class
+
+            for cls in classes:
+                unregister_class(cls)
+
+            aef_addon_pref.unregister()
+            aef_ui.unregister()
+            bbpl.unregister()
+
+        except Exception as _:
+            import traceback
+            print("Failed to unregister addon:")
+            print("\033[91m" + "---------------------------------" + "\033[0m")
+            traceback.print_exc()
+            print("\033[91m" + "---------------------------------" + "\033[0m")
+
+
+except Exception as _:
+    import traceback
+    print("Failed to import addon modules:")
+    print("\033[91m" + "---------------------------------" + "\033[0m")
+    traceback.print_exc()
+    print("\033[91m" + "---------------------------------" + "\033[0m")
